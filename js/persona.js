@@ -1,106 +1,74 @@
+"use strict";
+
 class Person {
-  constructor(name, lastname1, lastname2, born, picture) {
+  constructor(name, lastname1, born) {
+    //codigo para que la clase sea abstracta
     if (new.target === Person) {
       throw new Error("Cannot instantiate abstract class");
     }
     this._name = name;
     this._lastname1 = lastname1;
-    this._lastname2 = lastname2;
+    this._lastname2 = "";
     this._born = born;
+    this._picture = "";
+  }
+
+  get name() {
+    return this._name;
+  }
+
+  set name(name) {
+    this._name = name;
+  }
+
+  get _lastname1() {
+    return this._lastname1;
+  }
+
+  set _lastname1(lastname1) {
+    this._name = lastname1;
+  }
+
+  get _lastname2() {
+    return this._name;
+  }
+  set _lastname2(name) {
+    this._name = name;
+  }
+
+  get born() {
+    return this._born;
+  }
+
+  set born(born) {
+    this._born = born;
+  }
+
+  get picture() {
+    return this._picture;
+  }
+
+  set picture(picture) {
     this._picture = picture;
   }
 
-  get name() {
-    return this._name;
-  }
-
-  set name(name) {
-    this._name = name;
-  }
-
-  get dni() {
-    return this._dni;
-  }
-
-  set dni(dni) {
-    if (!/^(\d{8}[A-Z])$/.test(dni)) {
-      throw new Error("Invalid DNI format");
-    }
-    this._dni = dni;
-  }
-
-  get birth() {
-    return this._birth;
-  }
-
-  set birth(birth) {
-    this._birth = birth;
-  }
-
   toString() {
-    return `Name: ${this._name}, DNI: ${this._dni}, Birth: ${this._birth}`;
+    return `Name: ${this._name}, LastName 1: ${this._lastname1}, LastName 2: ${this._lastname2}`;
   }
 }
 
-class Student extends Person {
-  constructor(name, dni, birth, degree, grade) {
-    super(name, dni, birth);
-    if (!["bachelor", "vocational", "others"].includes(degree)) {
-      throw new Error("Invalid degree type");
-    }
-    this._degree = degree;
-    this._grade = grade;
-  }
-
-  get degree() {
-    return this._degree;
-  }
-
-  set degree(degree) {
-    this._degree = degree;
-  }
-
-  get grade() {
-    return this._grade;
-  }
-
-  set grade(grade) {
-    if (typeof grade !== "number" || grade < 0 || grade > 10) {
-      throw new Error("Invalid grade format");
-    }
-    this._grade = grade;
-  }
-
-  toString() {
-    return `${super.toString()}, Degree: ${this._degree}, Grade: ${this._grade}`;
-  }
-}
-
-class Professor extends Person {
-  constructor(name, dni, birth) {
-    super(name, dni, birth);
-  }
-}
-
-class Course {
-
-  //?Aqui tengo que ponerlo en el constructor o en el set.
+//!este codigo es para que un objeto no sea instanciable
+// if (new.target === Person) {
+//   throw new Error("Cannot instantiate abstract class");
+// }
 
 
-  constructor(name, students, tutor) {
+class Category {
+  constructor(name) {
+
     this._name = name;
-    this._students = students;
-    this._studentsBachellor = [];
-    this._studentsMedium = [];
-    this._studentsOthers = [];
-    this._admittedStudents = [];
+    this._description = "";
 
-    this._students = students;
-
-    if (!(tutor instanceof Professor)) {
-      throw new Error("Invalid tutor format");
-    }
-    this._tutor = tutor;
   }
 
   get name() {
@@ -111,67 +79,214 @@ class Course {
     this._name = name;
   }
 
-  get students() {
-    return this._students;
+  get description() {
+    return this._name;
   }
 
-  doApplication(student) {
+  set description(description) {
+    this._description = description;
+  }
 
-    //Variable donde asignaremos la lista de estudiantes correspondiente a lo que haya estudiado el alumno
-    let targetList;
+  //TODO
+  toString() {
+    return `Name: ${this._name}, DNI: ${this._description}`;
+  }
+}
 
-    if (student.degree === "bachelor") {
-      targetList = this._bachilleratoList;
-    } else if (student.degree === "vocational") {
-      targetList = this._gradoMedioList;
-    } else if (student.degree === "others") {
-      targetList = this._otrosEstudiosList;
+
+class Resource {
+
+  constructor(duration, link) {
+    this._duration = duration;
+    this._link = link;
+  }
+
+  get duration() {
+    return this._duration;
+  }
+
+  set duration(duration) {
+    this._duration = duration;
+  }
+
+  get link() {
+    return this._link;
+  }
+
+  set link(link) {
+    this._link = link;
+  }
+  //TODO
+  toString() {
+    return `Duration: ${this._degree}, Link: ${this._grade}`;
+  }
+}
+
+
+class Production {
+
+  constructor(title, publication) {
+    //Para que sea implementado de forma abstracta
+    if (new.target === Production) {
+      throw new Error("Cannot instantiate abstract class");
     }
+    this._title = title;
+    this._nationality = "";
+    this._publication = publication;
+    this._synopsis = "";
+    this._image = "";
+  }
 
-    // Aqui pondremos la ordenacion pero como no tenemos nungun atributo que nos diga la nota pues nada
+  get title() {
+    return this._title;
+  }
+
+  set title(link) {
+    this._link = link;
+  }
+
+  get nationality() {
+    return this._nationality;
+  }
+
+  set nationality(nationality) {
+    this._nationality = nationality;
+  }
+
+  get publication() {
+    return this._publication;
+  }
+
+  set publication(publication) {
+    this._publication = publication;
+  }
+
+  get synopsis() {
+    return this._publication;
+  }
+
+  set synopsis(synopsis) {
+    this._synopsis = synopsis;
+  }
+
+  get image() {
+    return this._image;
+  }
+
+  set image(image) {
+    this._image = image;
+  }
+
+  //TODO
+  toString() {
+    return `Duration: ${this._degree}, Link: ${this._grade}`;
+  }
+}
+
+//movie hereda de resource
+
+class Movie extends Resource {
+
+  constructor(duration, link) {
+    super(duration, link);
+
+    this._duration = duration;
+    this._link = link;
+  }
+
+  get resource() {
+    return this._resource;
+  }
+
+  set resource(resource) {
+    this._resource = resource;
+  }
+
+  get locations() {
+    return this._locations;
+  }
+
+  set locations(locations) {
+    this._locations = locations;
+  }
+  //TODO
+  toString() {
+    return `Duration: ${this._degree}, Link: ${this._grade}`;
+  }
+}
+
+
+class Serie extends Resource {
+
+  constructor(duration, link) {
+    super(duration, link);
+
+    this._duration = duration;
+    this._link = link;
   }
 
 
-  set students(students) {
-    //Mira si se ha introducido ya el estudiante.
-
-    if (this._bachilleratoList.includes(student) ||
-      this._gradoMedioList.includes(student) ||
-      this._otrosEstudiosList.includes(student)) {
-      throw new Error("Student already applied to this course");
-    }
-    else {
-      this.doApplication(students);
-    }
-
+  get seasons() {
+    return this._seasons;
   }
 
-  get tutor() {
-    return this._tutor;
+  set seasons(seasons) {
+    this._seasons = seasons;
   }
 
-  set tutor(tutor) {
-    if (!(tutor instanceof Professor)) {
-      throw new Error("Invalid tutor format");
-    }
-    this._tutor = tutor;
-  };
+  toString() {
+    return `Duration: ${this._degree}, Link: ${this._grade}`;
+  }
 
 }
 
-let instance = null;
+class User extends Person {
+  constructor(name, lastname1, lastname2, born, picture, username, email, password) {
 
-class HighSchool {
+    super(name, lastname1, lastname2, born, picture);
 
+    this._username = username;
+    this._email = email;
+    this._password = password;
+  }
+}
+
+class Coordinate {
+
+  constructor(latitude, longitude) {
+
+    this._latitude = latitude;
+    this._longitude = longitude;
+
+  }
+
+}
+
+
+class VideoSystem {
   constructor(name) {
     if (instance) {
       return instance;
     }
+    //nombre del sistema
     this._name = name;
-    this._courses = [];
-    instance = this;
-  }
+    //usuarios que tienen acceso al sistema
+    this._users = new Array();
+    //producciones que tenemos en el sistema
+    this._productions = new Array();
+    //categorias de las producciones
+    this._categories = new Array();
+    //actores y actrices que tenemos registrados
+    this._interpreters = new Array();
+    //directores que tenemos en el sistema
+    this._directors = new Array();
 
+
+
+
+
+
+  }
   get name() {
     return this._name;
   }
@@ -180,36 +295,136 @@ class HighSchool {
     this._name = name;
   }
 
-  addCourse(course) {
-    if (this._courses.some(c => c.name === course.name)) {
-      throw new Error("Course already registered");
-    }
-    this._courses.push(course);
+  get categories() {
+    return this._name;
   }
 
-  removeCourse(course) {
-    const index = this._courses.findIndex(c => c.name === course.name);
-    if (index === -1) {
-      throw new Error("Course not registered");
-    }
-    this._courses.splice(index, 1);
+  set categories(categories) {
+    this._categories = categories;
   }
 
-
-  *coursesGenerator() {
-    yield* this._courses;
+  get seasons() {
+    return this._seasons;
   }
 
-  get courses() {
-    return this.coursesGenerator();
+  set seasons(seasons) {
+    this._seasons = seasons;
   }
 
-  *admittedStudentsGenerator() {
-    yield* this._courses;
+  get seasons() {
+    return this._seasons;
   }
 
-  get courses() {
-    return this.admittedStudentsGenerator();
+  set seasons(seasons) {
+    this._seasons = seasons;
+  }
+
+  *categoriesGenerator() {
+    yield* this._categories;
+  }
+
+  get categories() {
+    return this._categories;
+  }
+
+  get seasons() {
+    return this._seasons;
+  }
+
+  set seasons(seasons) {
+    this._seasons = seasons;
+  }
+
+  *usersGenerator() {
+    yield* this._users;
+  }
+
+  get users() {
+    return this._users;
+  }
+
+  set users(users) {
+    this._users = users;
+  }
+
+  get productions() {
+    return this._productions;
+  }
+
+  set productions(users) {
+    this._productions = users;
+  }
+
+  get actors() {
+    return this._actors;
+  }
+
+  set actors(actors) {
+    this._actors = actors;
+  }
+
+  removeCategory(categorie) {
+    this._categories.delete(categorie);
+  }
+
+  addUser(user) {
+    this._users.push(user)
+  }
+
+  removeUser() {
+
+  }
+
+  addActor() {
+
+  }
+
+  removeActor() {
+
+  }
+
+  addProduction() {
+
+  }
+
+  removeProduction() {
+
+  }
+
+  assignCategory(){
+
+  }
+
+  assignDirector(){
+
+  }
+
+  deassignDirector(){
+
+  }
+
+  assignActor(){
+
+  }  
+
+  deassignActor(){
+
+  }
+
+  getCast(){
+
+  }
+
+  getProductionsDirector(){
+
+  }
+
+  getProductionsActor(){
+
+  }
+
+  getProductionsCategory(){
+
   }
 
 
@@ -217,10 +432,3 @@ class HighSchool {
 
 
 
-
-
-
-let alarcos = new HighSchool();
-
-alarcos.defineProperty();
-let carlos;
