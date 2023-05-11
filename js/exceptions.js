@@ -36,10 +36,11 @@ class InvalidValueException extends BaseException {
     constructor(param, value, fileName, lineNumber) {
         super(`Error: The paramenter ${param} has an invalid value. (${param}: ${value})`, fileName, lineNumber);
         this.param = param;
-        this.name = "EmptyValueException";
+        this.name = "InvalidValueException";
     }
 }
 //Excepción personalizada para clases abstractas.
+
 class AbstractClassException extends BaseException {
     constructor(className, fileName, lineNumber) {
         super(`Error: The class ${className} is abstract.`, fileName, lineNumber);
@@ -65,10 +66,3 @@ class InvalidDegreeException extends BaseException {
     }
 }
 
-class  extends BaseException {
-    constructor(degree, fileName, lineNumber) {
-        super(`Error: The dni ${degree} is not correct.`, fileName, lineNumber);
-        this.degree = degree;
-        this.name = "InvalidDegreeException";
-    }
-}
