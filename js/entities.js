@@ -1,6 +1,5 @@
 "use strict";
-
-import { BaseException, InvalidAccessConstructorException, EmptyValueException, InvalidValueException, AbstractClassException } from './exceptions.js';
+//import { BaseException, InvalidAccessConstructorException, EmptyValueException, InvalidValueException, AbstractClassException, InvalidDNIException, InvalidDegreeException }from './exceptions.js';
 
 class Person {
   #name;
@@ -9,7 +8,7 @@ class Person {
   #born;
   #picture;
   constructor(name, lastname1, born) {
-    // codigo para que la clase sea abstracta
+    //codigo para que la clase sea abstracta
     if (new.target === Person) {
       throw new Error("Cannot instantiate abstract class");
     }
@@ -20,9 +19,9 @@ class Person {
     this.#name = name;
     this.#lastname1 = lastname1;
 
-    //no es necesario establecer estas propiedades 
+    //? no es necesario establecer estas propiedades 
     // this.#lastname2 = "";
-    // this.#born = undefined;
+    // this.#born = born;
     // this.#picture = "";
   }
 
@@ -72,7 +71,7 @@ class Person {
 }
 
 
-//!este codigo es para que un objeto no sea instanciable
+//!este codigo es para que una clase no sea instanciable es decir para que sea abstracta
 // if (new.target === Person) {
 //   throw new Error("Cannot instantiate abstract class");
 // }
@@ -84,7 +83,8 @@ class Category {
   constructor(name) {
 
     this.#name = name;
-    this.#description = "";
+    //? no es necesario 
+    //this.#description = "";
 
   }
 
@@ -146,18 +146,22 @@ class Production {
   #title;
   #nationality;
   #publication;
-  #synopsis
+  #synopsis;
   #image;
   constructor(title, publication) {
+
     //Para que sea implementado de forma abstracta
     if (new.target === Production) {
       throw new Error("Cannot instantiate abstract class");
     }
+
     this.#title = title;
-    this.#nationality = "";
     this.#publication = publication;
-    this.#synopsis = "";
-    this.#image = "";
+
+
+    // this.#nationality = "";
+    // this.#synopsis = "";
+    // this.#image = "";
   }
 
   get title() {
@@ -185,7 +189,7 @@ class Production {
   }
 
   get synopsis() {
-    return this.#publication;
+    return this.#synopsis;
   }
 
   set synopsis(synopsis) {
@@ -208,35 +212,43 @@ class Production {
 
 //movie hereda de resource
 
-class Movie extends Resource {
-  #duration;
-  #link;
-  constructor(duration, link) {
-    super(duration, link);
-    this.#duration = duration;
-    this.#link = link;
+class Movie extends Production {
+  #resource
+  #locations
+  constructor(resource, locations) {
+    super(title, nationality, publication, synopsis, image);
+    
+    this.#resource = resource;
+
+    
+    if (Array.isArray(locations) && locations.length > 0) {
+      this.#locations = array.push(location);
+    } else {
+      this.#locations = [];
+    }
+
   }
 
 
-  get duration() {
-    return this.#duration;
-  }
+  // get duration() {
+  //   return this.#duration;
+  // }
 
-  set duration(duration) {
-    this.#duration = duration;
-  }
+  // set duration(duration) {
+  //   this.#duration = duration;
+  // }
 
-  get link() {
-    return this.#link;
-  }
+  // get link() {
+  //   return this.#link;
+  // }
 
-  set link(link) {
-    this.#link = link;
-  }
+  // set link(link) {
+  //   this.#link = link;
+  // }
   //TODO
-  toString() {
-    return `Duration: ${this.#duration}, Link: ${this.#link}`;
-  }
+  // toString() {
+  //   return `Duration: ${this.#duration}, Link: ${this.#link}`;
+  // }
 }
 
 
@@ -273,229 +285,91 @@ class Serie extends Resource {
 
 }
 
-class User extends Person {
-  #username
-  #email
-  #password
-  constructor(name, lastname1, lastname2, born, picture, username, email, password) {
+// class User extends Person {
+//   #username
+//   #email
+//   #password
+//   constructor(name, lastname1, lastname2, born, picture, username, email, password) {
 
-    super(name, lastname1, lastname2, born, picture);
+//     super(name, lastname1, lastname2, born, picture);
 
-    this.#username = username;
-    this.#email = email;
-    this.#password = password;
-  }
-}
+//     this.#username = username;
+//     this.#email = email;
+//     this.#password = password;
+//   }
+// }
 
-class Coordinate {
-  #latitude
-  #longitude
-  constructor(latitude, longitude) {
+// class Coordinate {
+// 	#latitude;
+// 	#longitude;
 
-    this.#latitude = latitude;
-    this.#longitude = longitude;
+// 	constructor(latitude = 0, longitude = 0){
 
-  }
+// 		latitude = typeof latitude !== 'undefined' ? Number(latitude).valueOf() : 0;
+// 		if (Number.isNaN(latitude)  || latitude < -90 || latitude > 90) 
+// 			throw new InvalidValueException("latitude", latitude);
+// 		longitude = typeof longitude !== 'undefined' ? Number(longitude).valueOf() : 0;
+// 		if (Number.isNaN(longitude)  || longitude < -180 || longitude > 180) 
+// 			throw new InvalidValueException("longitude", longitude);
 
-}
+// 		this.#latitude = latitude;
+// 		this.#longitude = longitude;		
+// 	}
 
+// 	get latitude(){
+// 		return this.#latitude;
+// 	}
 
-class VideoSystem {
+// 	set latitude(value){
+// 		value = typeof value !== 'undefined' ? Number(value).valueOf() : 0;
+// 		if (Number.isNaN(value)  || value < -90 || value > 90) 
+// 			throw new InvalidValueException("latitude", value);
+// 		this.#latitude = value;
+// 	}
 
-  #name
-  #users
-  #productions
-  #categories
-  #actors
-  #directors
-  #seasons
+// 	get longitude(){
+// 		return this.#longitude;
+// 	}
+// 	set longitude(value){
+// 		value = typeof value !== 'undefined' ? Number(value).valueOf() : 0;
+// 		if (Number.isNaN(value)  || value < -180 || value > 180) 
+// 			throw new InvalidValueException("longitude", value);
+// 		this.#longitude = value;
+// 	}
 
-  constructor(name) {
-    if (instance) {
-      return instance;
-    }
-    //nombre del sistema
-    this.#name = name;
-    //usuarios que tienen acceso al sistema
-    this.#users = new Array();
-    //producciones que tenemos en el sistema
-    this.#productions = new Array();
-    //categorias de las producciones
-    this.#categories = new Array();
-    //actores y actrices que tenemos registrados
-    this.#actors = new Array();
-    //directores que tenemos en el sistema
-    this.#directors = new Array();
+// 	getSexagesimalLatitude(){
+// 		let direction = this.latitude >= 0 ? "N" : "S";
+// 		let latitude = Math.abs(this.latitude);
+// 		let grades =  Math.floor (latitude);
+// 		let tmpMinutes = (latitude - grades) * 60;
+// 		let minutes = Math.floor (tmpMinutes);
+// 		let tmpSeconds = (tmpMinutes - minutes) * 60;
+// 		let seconds = Math.round (tmpSeconds);
 
-  }
-  
-  get name() {
-    return this.#name;
-  }
-
-  set name(name) {
-    this.#name = name;
-  }
-
-  get users() {
-    return this.#users;
-  }
-
-  addUser(user) {
-    this.#users.push(user)
-  }
-
-  removeUser(user) {
-    let found = this.#users.findIndex(this.#users, user);
-    this.#users.splice(found, 1);
-  }
-
-  *categoriesGenerator() {
-    yield* this.#categories;
-  }
-
-  get categories() {
-    return this.#categories;
-  }
-
-  addCategory(category) {
-    this.#categories.push(
-      {
-      category: category,
-      productions: []
-      }
-    )
-  }
-
-  get productions() {
-    return this.#productions;
-  }
-
-  addProduction(production) {
-    this.#productions.push(production)
-  }
-
-  removeProduction(production) {
-    let found = this.#productions.findIndex(this.#productions, production);
-    this.#productions.splice(found, 1);
-  }
-
-  addActor(actor) {
-    this.#actors.push(actor)
-  }
-
-  removeActor(actor) {
-    let found = this.#actors.findIndex(this.#actors, actor);
-    this.#actors.splice(found, 1);
-  }
+// 		return grades + "°" + minutes + "'" + seconds + "''" + direction; 	
+// 	} 
 
 
-  set seasons(seasons) {
-    this.#seasons = seasons;
-  }
+// 	getSexagesimalLongitude(){	
+// 		let direction = this.longitude >= 0 ? "E" : "W";
+// 		let longitude = Math.abs(this.longitude);
+// 		let grades =  Math.floor (longitude);
+// 		let tmpMinutes = (longitude - grades) * 60;
+// 		let minutes = Math.floor (tmpMinutes);
+// 		let tmpSeconds = (tmpMinutes - minutes) * 60;
+// 		let seconds = Math.round (tmpSeconds);
 
-  get seasons() {
-    return this.#seasons;
-  }
+// 		return grades + "°" + minutes + "'" + seconds + "''" + direction; 
+// 	}
 
-  set seasons(seasons) {
-    this.#seasons = seasons;
-  }
-
-
-  get seasons() {
-    return this.#seasons;
-  }
-
-  set seasons(seasons) {
-    this.#seasons = seasons;
-  }
-
-  *usersGenerator() {
-    yield* this.#users;
-  }
-
-  get users() {
-    return this.#users;
-  }
-
-  set users(users) {
-    this.#users = users;
-  }
-
-  get actors() {
-    return this.#actors;
-  }
-
-  set actor(actor) {
-    this.#actors = actor;
-  }
-
-  removeCategory(categorie) {
-    this.#categories.delete(categorie);
-  }
-
-  addActor(actor) {
-    //aqui usamos objetos literales
-    this.#actors.push(actor);
-  }
-
-  removeActor(actor) {
-    let found = this.#actors.findIndex(this.#actors, actor);
-    this.#actors.splice(found, 1);
-  }
-
-  addProduction(production) {
-    this.productions.push(production);
-  }
-
-  removeProduction() {
-    let found = this.#productions.findIndex(this.#productions, production);
-    this.#productions.splice(found, 1);
-  }
-
-  assignCategory() {
-    
-  }
-  deassignCategory() {
-
-  }
-
-  assignDirector() {
-    //recorrer array para ver si hay relaion entre lso objetos literales
-  }
-
-  deassignDirector() {
-
-  }
-
-  assignActor() {
-
-  }
-
-  deassignActor() {
-
-  }
-
-  getCast() {
-
-  }
-
-  getProductionsDirector() {
-
-  }
-
-  getProductionsActor() {
-
-  }
-
-  getProductionsCategory() {
-
-  }
+// }
 
 
-}
 
 //es redundante exportar entidad a entidad y todo el VideoSystem
-export { Person, Category, Resource, Production, Movie, Serie, User, Coordinate };
-export default VideoSystem;
+//  export {Person};
+//   //Category, Resource, Production, Movie, Serie, User, Coordinate };
+//  export default VideoSystem;
+
+
+ //en el

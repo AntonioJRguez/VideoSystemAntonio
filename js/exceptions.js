@@ -66,3 +66,5 @@ class InvalidDegreeException extends BaseException {
     }
 }
 
+//es redundante exportar entidad a entidad y todo el VideoSystem
+export { BaseException, InvalidAccessConstructorException, EmptyValueException, InvalidValueException, AbstractClassException, InvalidDNIException, InvalidDegreeException };
