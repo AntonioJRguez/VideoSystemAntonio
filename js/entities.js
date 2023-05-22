@@ -1,5 +1,5 @@
 "use strict";
-//import { BaseException, InvalidAccessConstructorException, EmptyValueException, InvalidValueException, AbstractClassException, InvalidDNIException, InvalidDegreeException }from './exceptions.js';
+import {InvalidAccessConstructorException, EmptyValueException, InvalidValueException, AbstractClassException, InvalidDNIException, InvalidDegreeException }from '/js/exceptions.js';
 
 class Person {
   #name;
@@ -8,7 +8,7 @@ class Person {
   #born;
   #picture;
   constructor(name, lastname1, born) {
-    //codigo para que la clase sea abstracta
+    // codigo para que la clase sea abstracta
     if (new.target === Person) {
       throw new Error("Cannot instantiate abstract class");
     }
@@ -150,7 +150,7 @@ class Production {
   #image;
   constructor(title, publication) {
 
-    //Para que sea implementado de forma abstracta
+    // Para que sea implementado de forma abstracta
     if (new.target === Production) {
       throw new Error("Cannot instantiate abstract class");
     }
@@ -210,41 +210,42 @@ class Production {
   }
 }
 
-//movie hereda de resource
+//movie hereda de production
 
 class Movie extends Production {
   #resource
   #locations
-  constructor(resource, locations) {
+  constructor(title, publication, nationality, synopsis, image, resource, locations) {
     super(title, nationality, publication, synopsis, image);
-    
+
     this.#resource = resource;
 
-    
-    if (Array.isArray(locations) && locations.length > 0) {
-      this.#locations = array.push(location);
-    } else {
-      this.#locations = [];
-    }
+
+    // if (Array.isArray(locations) && locations.length > 0) {
+    //   this.#locations = this.#locations.push(location);
+    // } else {
+    //   this.#locations = [];
+    // }
 
   }
 
 
-  // get duration() {
-  //   return this.#duration;
-  // }
+  get resource() {
+    return this.#resource;
+  }
 
-  // set duration(duration) {
-  //   this.#duration = duration;
-  // }
+  set resource(resource) {
+    this.#resource = resource;
+  }
 
-  // get link() {
-  //   return this.#link;
-  // }
+  get locations() {
+    return this.#locations;
+  }
 
-  // set link(link) {
-  //   this.#link = link;
-  // }
+  set location(location) {
+    this.#locations = this.#locations.splice(this.#locations.length, 0, location);
+  }
+
   //TODO
   // toString() {
   //   return `Duration: ${this.#duration}, Link: ${this.#link}`;
@@ -252,52 +253,85 @@ class Movie extends Production {
 }
 
 
-class Serie extends Resource {
-  #duration
-  #link
-  constructor(duration, link) {
-    super(duration, link);
+class Serie extends Production {
+  #resource
+  #locations
 
-    this.#duration = duration;
-    this.#link = link;
+  constructor(title, publication, image, resource, locations) {
+    super(title, nationality, publication, synopsis, image);
+
+    this.#resource = resource;
+
+
+    // if (Array.isArray(locations) && locations.length > 0) {
+    //   this.#locations = this.#locations.push(location);
+    // } else {
+    //   this.#locations = [];
+    // }
+
   }
 
 
-  get duration() {
-    return this.#duration;
+
+  get resource() {
+    return this.#resource;
   }
 
-  set duration(duration) {
-    this.#duration = duration;
+  set resource(resource) {
+    this.#resource = resource;
   }
 
-  get link() {
-    return this.#link;
+  get locations() {
+    return this.#locations;
   }
 
-  set link(link) {
-    this.#link = link;
+  set locations(location) {
+    this.#locations = this.#locations.splice(this.#locations.length, 0, location);
   }
 
-  toString() {
-    return `Duration: ${this.#duration}, Link: ${this.#link}`;
-  }
+  //TODO
+  // toString() {
+  //   return `Duration: ${this.#duration}, Link: ${this.#link}`;
+  // }
 
 }
 
-// class User extends Person {
-//   #username
-//   #email
-//   #password
-//   constructor(name, lastname1, lastname2, born, picture, username, email, password) {
+class User extends Person {
+  #username
+  #email
+  #password
+  constructor(name, lastname1, born, username, email, password) {
 
-//     super(name, lastname1, lastname2, born, picture);
+    super(name, lastname1, lastname2, born, picture);
 
-//     this.#username = username;
-//     this.#email = email;
-//     this.#password = password;
-//   }
-// }
+    this.#username = username;
+    this.#email = email;
+    this.#password = password;
+
+
+  }
+
+//   //?por qué no ponemos setters de emails y contraseñas (por seguridad, pero como los sacamos luego)
+
+
+  get username() {
+    return this.#username;
+  }
+
+  set username(value) {
+    this.#username = value;
+  }
+
+  get email() {
+    return this.#email;
+  }
+
+  get password() {
+    return this.#password;
+  }
+
+
+}
 
 // class Coordinate {
 // 	#latitude;
@@ -306,14 +340,14 @@ class Serie extends Resource {
 // 	constructor(latitude = 0, longitude = 0){
 
 // 		latitude = typeof latitude !== 'undefined' ? Number(latitude).valueOf() : 0;
-// 		if (Number.isNaN(latitude)  || latitude < -90 || latitude > 90) 
+// 		if (Number.isNaN(latitude)  || latitude < -90 || latitude > 90)
 // 			throw new InvalidValueException("latitude", latitude);
 // 		longitude = typeof longitude !== 'undefined' ? Number(longitude).valueOf() : 0;
-// 		if (Number.isNaN(longitude)  || longitude < -180 || longitude > 180) 
+// 		if (Number.isNaN(longitude)  || longitude < -180 || longitude > 180)
 // 			throw new InvalidValueException("longitude", longitude);
 
 // 		this.#latitude = latitude;
-// 		this.#longitude = longitude;		
+// 		this.#longitude = longitude;
 // 	}
 
 // 	get latitude(){
@@ -322,7 +356,7 @@ class Serie extends Resource {
 
 // 	set latitude(value){
 // 		value = typeof value !== 'undefined' ? Number(value).valueOf() : 0;
-// 		if (Number.isNaN(value)  || value < -90 || value > 90) 
+// 		if (Number.isNaN(value)  || value < -90 || value > 90)
 // 			throw new InvalidValueException("latitude", value);
 // 		this.#latitude = value;
 // 	}
@@ -332,7 +366,7 @@ class Serie extends Resource {
 // 	}
 // 	set longitude(value){
 // 		value = typeof value !== 'undefined' ? Number(value).valueOf() : 0;
-// 		if (Number.isNaN(value)  || value < -180 || value > 180) 
+// 		if (Number.isNaN(value)  || value < -180 || value > 180)
 // 			throw new InvalidValueException("longitude", value);
 // 		this.#longitude = value;
 // 	}
@@ -346,11 +380,11 @@ class Serie extends Resource {
 // 		let tmpSeconds = (tmpMinutes - minutes) * 60;
 // 		let seconds = Math.round (tmpSeconds);
 
-// 		return grades + "°" + minutes + "'" + seconds + "''" + direction; 	
-// 	} 
+// 		return grades + "°" + minutes + "'" + seconds + "''" + direction;
+// 	}
 
 
-// 	getSexagesimalLongitude(){	
+// 	getSexagesimalLongitude(){
 // 		let direction = this.longitude >= 0 ? "E" : "W";
 // 		let longitude = Math.abs(this.longitude);
 // 		let grades =  Math.floor (longitude);
@@ -359,17 +393,17 @@ class Serie extends Resource {
 // 		let tmpSeconds = (tmpMinutes - minutes) * 60;
 // 		let seconds = Math.round (tmpSeconds);
 
-// 		return grades + "°" + minutes + "'" + seconds + "''" + direction; 
+// 		return grades + "°" + minutes + "'" + seconds + "''" + direction;
 // 	}
 
 // }
 
 
 
-//es redundante exportar entidad a entidad y todo el VideoSystem
-//  export {Person};
-//   //Category, Resource, Production, Movie, Serie, User, Coordinate };
-//  export default VideoSystem;
+// //es redundante exportar entidad a entidad y todo el VideoSystem
+// //  export {Person};
+// //   //Category, Resource, Production, Movie, Serie, User, Coordinate };
+// //  export default VideoSystem;
 
 
- //en el
+//  //en el
